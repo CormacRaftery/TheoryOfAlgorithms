@@ -45,6 +45,18 @@ void md5(uint8_t *initial_msg, size_t initial_len) {
 	h1 = 0xefcdab89;
 	h2 = 0x98badcfe;
 	h3 = 0x10325476;
+
+	//pre-processing of initial message add 1 bit to message and fill with 0's until length = 448
+	//append length in bits to end of message
+
+	int new_len = ((((initial_len + 8) / 64) + 1) * 64) - 8;
+
+	msg = calloc(new_len + 64, 1);
+	memcpy(msg, initial_msg, initial_len);
+	msg[initial_len] = 128;
+
+	uint32_t bits_len = 8 * initial_len;
+	memcpy(msg + new_len, &bits_len, 4);
 }
 
 int main(int argc, char *argv[]) {
@@ -55,10 +67,33 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
 
-	FILE *infile = fopen(argv[1], "rb");
+	FILE *infile = fopen(argv[1], "r");
 	if (!infile) {
 		printf("Error: couldn't open file %s.\n", argv[1]);
 		return 1;
-	}
+	} else {
+		printf("Hashing file");
+		while (fgets(ch, 1000, fp) != NULL) {
+			size_t len = strlen(ch);
+			md5(ch, len);
 
+			// display result
+			/*
+			 * uint8_t *p;
+			 p = (uint8_t*) &h0;
+			 printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h0);
+
+			 p = (uint8_t*) &h1;
+			 printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h1);
+
+			 p = (uint8_t*) &h2;
+			 printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h2);
+
+			 p = (uint8_t*) &h3;
+			 printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h3);*/
+			fclose(fp);
+			return 0;
+		}
+
+	}
 }
