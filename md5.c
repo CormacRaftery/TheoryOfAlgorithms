@@ -57,6 +57,14 @@ void md5(uint8_t *initial_msg, size_t initial_len) {
 
 	uint32_t bits_len = 8 * initial_len;
 	memcpy(msg + new_len, &bits_len, 4);
+
+	//pre-processing done
+	int offset;
+	for (offset = 0; offset < new_len; offset += (512 / 8)) {
+
+		//seperate into 16 32-bit words
+		uint32_t *w = (uint32_t*) (msg + offset);
+	}
 }
 
 int main(int argc, char *argv[]) {
