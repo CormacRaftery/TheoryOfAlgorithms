@@ -102,6 +102,8 @@ void md5(uint8_t *initial_msg, size_t initial_len) {
 		h2 += c;
 		h3 += d;
 	}
+	// cleanup
+	free(msg);
 }
 
 int main(int argc, char *argv[]) {
