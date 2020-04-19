@@ -1,8 +1,13 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <stdint.h>
-
+#include <inttypes.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <ctype.h>
+#include <unistd.h>
+#include <string.h>
+//gcc library for upper and lower bounds on case in switch
+//#include <limits.h>
 // leftrotate function definition
 #define LEFTROTATE(x, c) (((x) << (c)) | ((x) >> (32 - (c))))
 
@@ -106,42 +111,74 @@ void md5(uint8_t *initial_msg, size_t initial_len) {
 	free(msg);
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char **argv) {
 
-	// Expect and open a single filename.
-	if (argc != 2) {
-		printf("Error: expected single filename as argument.\n");
+	char *cvalue = NULL;
+	//variable if user wants to enter string
+	bool userString = false;
+	//variable if user wants to enter file
+	bool userFile = false;
+	//reading strring options
+	int c;
+
+	while ((c = getopt(argc, argv, "s:f:")) != -1) {
+		switch (c) {
+		case 's':
+			userString = true;
+			cvalue = optarg;
+			break;
+		case 'f':
+			userFile = 1;
+			cvalue = optarg;
+			break;
+		default:
+			abort();
+		}
+	}
+	if (!userString && !userFile) {
+		printf(
+				"Please select either file or string. -f [filename], -s[string] \n");
 		return 1;
 	}
 
-	FILE *infile = fopen(argv[1], "r");
-	if (!infile) {
-		printf("Error: couldn't open file %s.\n", argv[1]);
-		return 1;
-	} else {
-		printf("Hashing file");
-		while (fgets(ch, 1000, fp) != NULL) {
-			size_t len = strlen(ch);
-			md5(ch, len);
-
-			// display result
-
-			 uint8_t *p;
-
-			 p = (uint8_t*) &h0;
-			 printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h0);
-
-			 p = (uint8_t*) &h1;
-			 printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h1);
-
-			 p = (uint8_t*) &h2;
-			 printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h2);
-
-			 p = (uint8_t*) &h3;
-			 printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h3);
-			fclose(fp);
+	FILE *hashFile;
+	if (userFile) {
+		hashFile = fopen(cvalue, "r");
+		if (!hashFile) {
+			printf("Error opening file\n");
 			return 0;
 		}
 
+		while (fgets(ch, 1000, hashFile) != NULL) {
+			size_t len = strlen(ch);
+			md5(ch, len);
+
+			uint8_t *p;
+
+			// display result
+
+			p = (uint8_t*) &h0;
+			printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h0);
+
+			p = (uint8_t*) &h1;
+			printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h1);
+
+			p = (uint8_t*) &h2;
+			printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h2);
+
+			p = (uint8_t*) &h3;
+			printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h3);
+			puts("");
+
+			return 0;
+		}
+
+	}
+
+	printf("Compile the program using the command: gcc -o md5 -O3 -lm md5.c\n");
+
+	if (argc < 2) {
+		printf("usage: %s 'string'\n", argv[0]);
+		return 1;
 	}
 }
