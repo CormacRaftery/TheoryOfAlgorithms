@@ -173,6 +173,31 @@ int main(int argc, char **argv) {
 			return 0;
 		}
 
+	}else if (userString) {
+
+		char *msg = cvalue;
+		size_t len = strlen(msg);
+
+		md5(msg, len);
+
+		uint8_t *p;
+
+		// display result
+
+		p = (uint8_t*) &h0;
+		printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h0);
+
+		p = (uint8_t*) &h1;
+		printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h1);
+
+		p = (uint8_t*) &h2;
+		printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h2);
+
+		p = (uint8_t*) &h3;
+		printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h3);
+		puts("");
+
+		return 0;
 	}
 
 	printf("Compile the program using the command: gcc -o md5 -O3 -lm md5.c\n");
