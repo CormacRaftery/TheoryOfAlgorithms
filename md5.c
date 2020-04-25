@@ -7,12 +7,12 @@
 #include <unistd.h>
 #include <string.h>
 //gcc library for upper and lower bounds on case in switch
-//#include <limits.h>
+#include <limits.h>
 // leftrotate function definition
 #define LEFTROTATE(x, c) (((x) << (c)) | ((x) >> (32 - (c))))
-
+#define MAXCHAR 10000
 // define input variables file name or string
-char ch, file_name[25];
+char ch[MAXCHAR], file_name[25];
 FILE *fp;
 
 // These variables are for the hash
@@ -113,6 +113,7 @@ void md5(uint8_t *initial_msg, size_t initial_len) {
 
 int main(int argc, char **argv) {
 
+	char *msg = NULL;
 	char *cvalue = NULL;
 	//variable if user wants to enter string
 	bool userString = false;
@@ -149,52 +150,51 @@ int main(int argc, char **argv) {
 			return 0;
 		}
 
-		while (fgets(ch, 1000, hashFile) != NULL) {
-			size_t len = strlen(ch);
-			md5(ch, len);
+		while (fgets(msg, MAXCHAR, hashFile) != NULL) {
+			msg = argv[1];
+			size_t len = strlen(msg);
+			md5((uint8_t*) msg, len);
 
 			uint8_t *p;
 
 			// display result
 
 			p = (uint8_t*) &h0;
-			printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h0);
+			printf("%2.2x%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h0);
 
 			p = (uint8_t*) &h1;
-			printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h1);
+			printf("%2.2x%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h1);
 
 			p = (uint8_t*) &h2;
-			printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h2);
+			printf("%2.2x%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h2);
 
 			p = (uint8_t*) &h3;
-			printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h3);
+			printf("%2.2x%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h3);
 			puts("");
 
 			return 0;
 		}
 
-	}else if (userString) {
+	} else if (userString) {
 
-		char *msg = cvalue;
+		msg = argv[1];
 		size_t len = strlen(msg);
-
-		md5(msg, len);
-
+		md5((uint8_t*) msg, len);
 		uint8_t *p;
 
 		// display result
 
 		p = (uint8_t*) &h0;
-		printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h0);
+		printf("%2.2x%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h0);
 
 		p = (uint8_t*) &h1;
-		printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h1);
+		printf("%2.2x%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h1);
 
 		p = (uint8_t*) &h2;
-		printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h2);
+		printf("%2.2x%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h2);
 
 		p = (uint8_t*) &h3;
-		printf("%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h3);
+		printf("%2.2x%2.2x%2.2x%2.2x%2.2x", p[0], p[1], p[2], p[3], h3);
 		puts("");
 
 		return 0;
@@ -206,4 +206,6 @@ int main(int argc, char **argv) {
 		printf("usage: %s 'string'\n", argv[0]);
 		return 1;
 	}
+	return 1;
 }
+
