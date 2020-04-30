@@ -57,9 +57,25 @@ The processing of the message is quite fascinating as the MD5 hashing algorithm 
 
 ## Complexity 
 
+<img src="https://paginas.fe.up.pt/~ei10109/ca/md5block.gif" alt="md5" width="500" height="500">
+Although difficult, it is not impossible to reverse a md5 hash. There are numerous websites which actually available to unhash md5 hashes such as : http://reversemd5.com/.
+
+However these website works on brute force and guess work. In general it is fair to say that md5 hashes cannot be unhashed if they are long, difficult strings. For example a string that would be a safe password would be "Qp*9%hP9Ig12&6yqpigmHJ". Ofcourse this would be a hassle to remember and type every time so md5 is not ideal for hashing passwords.
+
+MD5 is a 128-bit hash, and so it maps any string, no matter how long, into 128 bits. If you run all strings of length, say, 129 bits, some of them have to hash to the same value.
  
+The algorithm of Wang and Yu can be used to create files of arbitrary length that have identical MD5 hashes, and that differ only in 128 bytes somewhere in the middle of the file. Several people have used this technique to create pairs of interesting files with identical MD5 hashes. Wang and Yu wrote and entire paper on the maths behind breaking the MD5 algorithm which details it's flaws. https://link.springer.com/content/pdf/10.1007%2F11426639_2.pdf
+
+In this paper they use differential attacks to try to tackle the algorithm.Using modular differential attacks it is possible to solve almost if not all md5 hashes in 15 minutes - 1 hour. This is still a huge improvement over md4 which can be solved in under 1 second.
+
+
+MD5 is more popular than MD4 because MD4 was broken almost immediately and was considered weak from the moment of it's release while md5 seemed solid upon first release. MD5 is even more popular than MD6 because of the popularity of SHA.
 
 ## References 
+
+https://link.springer.com/content/pdf/10.1007%2F11426639_2.pdf - paper on breaking md5 hashes
+
+http://reversemd5.com/ - website to reverse md5 hashes
 
 https://www.youtube.com/watch?v=AhCLgRVcKMg - A YouTube tutorial on how to install the c programming language on a windows machine. 
 
