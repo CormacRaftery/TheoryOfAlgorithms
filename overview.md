@@ -40,6 +40,7 @@ Once this command is executed, and there is no compile time errors, you can run 
 
 ## Test 
 <img src="https://cdn.ttgtmedia.com/rms/onlineImages/security-md5_hashing_desktop.jpg" alt="hash example" width="500" height="500">
+
 ## Algorithm 
 
 This project was based on the MD5 hashing algorithm which was originally designed to be used as a cryptographic hash function. It failed in this regard due to coinciding strings having the same hash value and thus is now used as a checksum. It can be used for checking if files have been tampered with as if you hash 2 similar files but one has been tampered with, when you run it through the MD5 algorithm you will get 2 different hash values and the tampered file could potentially be harmful to your machine. It is very difficult to tamper with a file without changing the md5 hash value. 
