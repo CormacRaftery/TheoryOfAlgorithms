@@ -36,10 +36,16 @@ To use the program, you must ensure that you have the GCC compiler installed. Wh
 
 gcc md5.c -o md5 
 
-Once this command is executed, and there is no compile time errors, you can run the program. The program is ran by executing the commands as displayed in the user interface. 
+Once this command is executed, and there is no compile time errors, you can run the program. The program is ran by executing either 
+
+md5 -s "your string"
+
+or 
+
+md5 -f "your file"
 
 ## Test 
-<img src="https://cdn.ttgtmedia.com/rms/onlineImages/security-md5_hashing_desktop.jpg" alt="hash example" width="500" height="500">
+<img src="https://user-images.githubusercontent.com/26969181/80757989-f39a0280-8b2c-11ea-9595-d627cbd7ce79.PNG" alt="hash example" >
 
 ## Algorithm 
 
